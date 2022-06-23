@@ -1,4 +1,3 @@
-import re
 import os
 from rich import print
 
@@ -101,15 +100,29 @@ preco = 0
 categoria = ""
 tamanho = ""
 def registro_de_roupas():
-    global nome, preco, categoria, tamanho
-    nome = input("Digite o nome da peça: ")
-    try:
-        preco = float(input("Digite o preco da peça: "))
-    except:
-        raise ValueError("Preço inválido")
-        
-    categoria = input("Digite a categoria da peça: ")
-    tamanho = input("Digite o tamanho da peça: ")
+    while True:
+        global nome, preco, categoria, tamanho
+        nome = input("Digite o nome da peça: ")
+        try:
+            preco = float(input("Digite o preco da peça: "))
+        except:
+            # raise ValueError("Preço inválido")
+            continue
+        categoria = input("Digite a categoria da peça: ")
+        tamanho = input("Digite o tamanho da peça: ")
+        print("*"*20 + "\nAs informações foram digitadas corretamente?")
+        try:
+            digit_corretamente = int(input("[1] - Sim\n[2] - Não\n"))
+        except:
+            print("[on red]Digite uma opção válida[/]")
+            continue
+        if digit_corretamente == 1:
+            break
+        elif digit_corretamente == 2:
+            continue
+        else:
+            print("[on red]Digite uma opção válida[/]")
+            continue
 
 def registro_de_acessorios():
     global nome, preco, categoria
