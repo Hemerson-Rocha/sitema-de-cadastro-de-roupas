@@ -106,10 +106,11 @@ def registro_de_roupas():
         try:
             preco = float(input("Digite o preco da peça: "))
         except:
-            # raise ValueError("Preço inválido")
+            print("[on red]Preço inválido[/]")
             continue
         categoria = input("Digite a categoria da peça: ")
         tamanho = input("Digite o tamanho da peça: ")
+
         print("*"*20 + "\nAs informações foram digitadas corretamente?")
         try:
             digit_corretamente = int(input("[1] - Sim\n[2] - Não\n"))
@@ -125,14 +126,56 @@ def registro_de_roupas():
             continue
 
 def registro_de_acessorios():
-    global nome, preco, categoria
-    nome = input("Digite o nome da peça: ")
-    preco = float(input("Digite o preco da peça: "))
-    categoria = input("Digite a categoria da peça: ")
+    while True:
+        global nome, preco, categoria
+        nome = input("Digite o nome da peça: ")
+        preco = float(input("Digite o preco da peça: "))
+        categoria = input("Digite a categoria da peça: ")
+
+        print("*"*20 + "\nAs informações foram digitadas corretamente?")
+        try:
+            digit_corretamente = int(input("[1] - Sim\n[2] - Não\n"))
+        except:
+            print("[on red]Digite uma opção válida[/]")
+            continue
+        if digit_corretamente == 1:
+            break
+        elif digit_corretamente == 2:
+            continue
+        else:
+            print("[on red]Digite uma opção válida[/]")
+            continue
+
+def excluir_item(arquivo):
+    with open(arquivo,"r") as roup_teste:
+        i = 0
+        lista = []
+        lista_com_id = []
+        for infor in roup_teste:
+            print(f"ID - {i} - {infor}")
+            lista.append(infor)
+            lista_com_id.append(str(i)+":"+str([infor]))
+            i += 1
+
+    try:
+        id_excluir = int(input("Digite o ID do item que você quer excluir\n"))
+    except:
+        raise ValueError("Não digite letras")
+
+    if len(lista_com_id) - 1 >= id_excluir:
+        lista_com_id.pop(id_excluir)
+        lista.pop(id_excluir)
+    else:
+        print("O ID não está no arquivo")
+
+    with open(arquivo,"w") as roup_teste:
+        for linha in lista:
+            roup_teste.write(str(linha))
 
 
 while True:
     try:
+        os.system("cls")
         escolha = int(input("[1] - Registrar\n[2] - Excluir registro\n"))
     except:
         os.system("cls")
@@ -142,7 +185,7 @@ while True:
         while True:
 
             try:
-                print("Escolha a categoria")
+                print("\nEscolha a categoria")
                 registrar = int(input("[1] - Roupa Masculina\n[2] - Roupa Feminina\n[3] - Roupa Infantil\n[4] - Acessorios\n[5] - Voltar\n"))
             except:
                 os.system("cls")
@@ -171,8 +214,29 @@ while True:
                 os.system("cls")
                 print("[on red]Digite uma opção válida[/]")
     elif escolha == 2:
-        # excluir
-        pass
+        while True:
+            try:
+                print("\nEscolha a categoria")
+                categoria_excluir = int(input("[1] - Roupa Masculina\n[2] - Roupa Feminina\n[3] - Roupa Infantil\n[4] - Acessorios\n[5] - Voltar\n"))
+            except:
+                os.system("cls")
+                pass
+            if categoria_excluir == 1:
+                excluir_item("roupa_masculina.txt")
+            elif categoria_excluir == 2:
+                excluir_item("roupa_feminina.txt")
+            elif categoria_excluir == 3:
+                excluir_item("roupa_infantil.txt")
+            elif categoria_excluir == 4:
+                excluir_item("acessorios.txt")
+            elif categoria_excluir == 5:
+                    break
+            else:
+                os.system("cls")
+                print("[on red]Digite uma opção válida[/]")
+                continue
+            
+            break
     else:
         os.system("cls")
         print("[on red]Digite uma opção válida[/]")
