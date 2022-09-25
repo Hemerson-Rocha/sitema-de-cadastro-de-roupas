@@ -241,3 +241,4 @@ while True:
         os.system("cls")
         print("[on red]Digite uma opção válida[/]")
         continue
+
